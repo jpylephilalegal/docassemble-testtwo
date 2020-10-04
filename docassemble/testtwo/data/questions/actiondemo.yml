@@ -1,0 +1,36 @@
+mandatory: True
+question: Actions
+subquestion: |
+  [click here](${ url_action('trigger_process', numerator=6) })
+---
+event: trigger_process
+code: |
+  numerator = action_argument('numerator')
+  undefine('denominator', 'answer')
+  force_ask('result_shown')
+---
+question: |
+  Here is the result of the side process.
+subquestion: | 
+  ${ answer }
+continue button field: result_shown
+---
+code: |
+  # function_that_does_something_complex()
+  answer = numerator/denominator
+---
+question: |
+  What is the numerator?
+subquestion: |
+  ${ action_argument('foo') }
+fields:
+  - Numerator: numerator
+    datatype: number
+---
+question: |
+  What is the demoninator?
+subquestion: |
+  The numerator is ${ numerator }.
+fields:
+  - Numerator: denominator
+    datatype: number
